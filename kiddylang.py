@@ -8,14 +8,6 @@ def run_jam_code(code: str) -> str:
 
     global output_buffer
     output_buffer = ""
-
-    try:
-        lines = code.strip().split("\n")
-        run_program(lines)
-        return output_buffer if output_buffer else "✅ No output"
-    except Exception as e:
-        return f"❌ Error: {str(e)}"
-
     variables = {}
     lists = {}
     functions = {}
@@ -151,6 +143,12 @@ def run_jam_code(code: str) -> str:
             else:
                 print(f"Unknown command: {line}")
             i += 1
+                try:
+        lines = code.strip().split("\n")
+        run_program(lines)
+        return output_buffer if output_buffer else "No output"
+    except Exception as e:
+        return f" Error: {str(e)}"
 
     def eval_expr(expr):
         expr = expr.strip()
