@@ -20,6 +20,33 @@ def run_jam_code(code: str) -> str:
     def say(text):
         print(f"(say): {text}")
 
+    def eval_expr(expr):
+        expr = expr.strip()
+        if expr in variables:
+            return variables[expr]
+        elif expr.startswith('"') and expr.endswith('"'):
+            return expr.strip('"')
+        elif expr == "true":
+            return True
+        elif expr == "false":
+            return False
+        elif expr.startswith("[") and expr.endswith("]"):
+            return eval(expr)
+        else:
+            try:
+                return int(expr)
+            except:
+                return expr
+
+    def eval_condition(condition):
+        try:
+            for var in variables:
+                condition = condition.replace(var, repr(variables[var]))
+            condition = condition.replace("true", "True").replace("false", "False")
+            return eval(condition)
+        except:
+            return False
+
     def run_program(lines):
         nonlocal timer_start, last_return
         i = 0
@@ -143,12 +170,15 @@ def run_jam_code(code: str) -> str:
             else:
                 print(f"Unknown command: {line}")
             i += 1
-                try:
+
+    try:
         lines = code.strip().split("\n")
         run_program(lines)
-        return output_buffer if output_buffer else "No output"
+        sys.stdout = sys.__stdout__
+        return output.getvalue()
     except Exception as e:
-        return f" Error: {str(e)}"
+        sys.stdout = sys.__stdout__
+        return f"Error: {str(e)}"
 
     def eval_expr(expr):
         expr = expr.strip()
