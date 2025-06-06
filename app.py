@@ -8,10 +8,13 @@ CORS(app)
 
 @app.route("/run", methods=["POST"])
 def run_code():
-    data = request.json
-    code = data.get("code", "")
-    result = run_jam_code(code)
-    return jsonify({"output": result})
+    try:
+        data = request.json
+        code = data.get("code", "")
+        result = run_jam_code(code)
+        return jsonify({"output": result})
+    except Exception as e:
+        return jsonify({"output": f" Backend Error: {str(e)}"}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
