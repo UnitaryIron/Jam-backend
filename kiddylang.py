@@ -36,7 +36,10 @@ def run_jam_code(code: str) -> str:
             try:
                 return int(expr)
             except:
-                return expr
+                try:
+                    return float(expr)
+                except:
+                    return expr
 
     def eval_condition(condition):
         try:
@@ -58,8 +61,9 @@ def run_jam_code(code: str) -> str:
                 continue
 
             if line.startswith("let "):
-                parts = line[4:].split(" = ")
-                variables[parts[0].strip()] = eval_expr(parts[1].strip())
+                parts = line[4:].split(" = ", 1)
+                if len(parts) == 2:
+                    variables[parts[0].strip()] = eval_expr(parts[1].strip())
 
             elif line.startswith("print "):
                 to_print = line[6:].strip()
@@ -73,18 +77,22 @@ def run_jam_code(code: str) -> str:
                 print("ask is not supported in web version")
 
             elif line.startswith("add "):
-                parts = line[4:].split(" and ")
-                a = eval_expr(parts[0].strip())
-                b, var = parts[1].split(" into ")
-                b = eval_expr(b.strip())
-                variables[var.strip()] = a + b
+                parts = line[4:].split(" and ", 1)
+                if len(parts) == 2:
+                    a = eval_expr(parts[0].strip())
+                    subparts = parts[1].split(" into ", 1)
+                    if len(subparts) == 2:
+                        b = eval_expr(subparts[0].strip())
+                        variables[subparts[1].strip()] = a + b
 
             elif line.startswith("multiply "):
-                parts = line[9:].split(" and ")
-                a = eval_expr(parts[0].strip())
-                b, var = parts[1].split(" into ")
-                b = eval_expr(b.strip())
-                variables[var.strip()] = a * b
+                parts = line[9:].split(" and ", 1)
+                if len(parts) == 2:
+                    a = eval_expr(parts[0].strip())
+                    subparts = parts[1].split(" into ", 1)
+                    if len(subparts) == 2:
+                        b = eval_expr(subparts[0].strip())
+                        variables[subparts[1].strip()] = a * b
 
             elif line.startswith("length of "):
                 name = line[len("length of "):].strip()
@@ -111,49 +119,54 @@ def run_jam_code(code: str) -> str:
                 print(math.sqrt(num))
 
             elif line.startswith("random between "):
-                parts = line[len("random between "):].split(" and ")
-                a = int(eval_expr(parts[0]))
-                b = int(eval_expr(parts[1]))
-                print(random.randint(a, b))
+                parts = line[len("random between "):].split(" and ", 1)
+                if len(parts) == 2:
+                    a = int(eval_expr(parts[0]))
+                    b = int(eval_expr(parts[1]))
+                    print(random.randint(a, b))
 
             elif line.startswith("wait "):
                 pass  # skip wait for browser safety
 
             elif line.startswith("choose from "):
-                list_part, var_part = line.split("into")
-                items = [s.strip('" ') for s in list_part.split("from")[1].strip().split(",")]
-                chosen = random.choice(items)
-                variables[var_part.strip()] = chosen
+                parts = line[len("choose from "):].split(" into ", 1)
+                if len(parts) == 2:
+                    items = [s.strip('"\' ') for s in parts[0].split(",")]
+                    chosen = random.choice(items)
+                    variables[parts[1].strip()] = chosen
 
             elif line.startswith("function "):
-                name = line.split(" ")[1]
+                name = line.split()[1]
                 i += 1
                 body = []
-                while not lines[i].strip() == "}":
+                while i < len(lines) and not lines[i].strip() == "}":
                     body.append(lines[i])
                     i += 1
                 functions[name] = body
 
             elif line.startswith("call "):
-                name = line.split(" ")[1]
-                run_program(functions[name])
-                variables["last_return"] = last_return
+                name = line.split()[1]
+                if name in functions:
+                    run_program(functions[name])
+                    variables["last_return"] = last_return
 
             elif line.startswith("repeat "):
-                count = int(eval_expr(line.split(" ")[1]))
-                i += 1
-                block = []
-                while not lines[i].strip() == "}":
-                    block.append(lines[i])
+                parts = line.split()
+                if len(parts) >= 2:
+                    count = int(eval_expr(parts[1]))
                     i += 1
-                for _ in range(count):
-                    run_program(block)
+                    block = []
+                    while i < len(lines) and not lines[i].strip() == "}":
+                        block.append(lines[i])
+                        i += 1
+                    for _ in range(count):
+                        run_program(block)
 
             elif line.startswith("if "):
                 condition = line[3:].split("{")[0].strip()
                 i += 1
                 block = []
-                while not lines[i].strip() == "}":
+                while i < len(lines) and not lines[i].strip() == "}":
                     block.append(lines[i])
                     i += 1
                 if eval_condition(condition):
@@ -179,33 +192,6 @@ def run_jam_code(code: str) -> str:
     except Exception as e:
         sys.stdout = sys.__stdout__
         return f"Error: {str(e)}"
-
-    def eval_expr(expr):
-        expr = expr.strip()
-        if expr in variables:
-            return variables[expr]
-        elif expr.startswith('"') and expr.endswith('"'):
-            return expr.strip('"')
-        elif expr == "true":
-            return True
-        elif expr == "false":
-            return False
-        elif expr.startswith("[") and expr.endswith("]"):
-            return eval(expr)
-        else:
-            try:
-                return int(expr)
-            except:
-                return expr
-
-    def eval_condition(condition):
-        try:
-            for var in variables:
-                condition = condition.replace(var, repr(variables[var]))
-            condition = condition.replace("true", "True").replace("false", "False")
-            return eval(condition)
-        except:
-            return False
 
     lines = code.strip().splitlines()
     run_program(lines)
