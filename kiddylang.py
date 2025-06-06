@@ -6,6 +6,16 @@ def run_jam_code(code: str) -> str:
     import time
     import pyttsx3
 
+    global output_buffer
+    output_buffer = ""
+
+    try:
+        lines = code.strip().split("\n")
+        run_program(lines)
+        return output_buffer if output_buffer else "✅ No output"
+    except Exception as e:
+        return f"❌ Error: {str(e)}"
+
     variables = {}
     lists = {}
     functions = {}
