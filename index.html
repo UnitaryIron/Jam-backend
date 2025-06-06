@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jam IDE v1.0</title>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+        background: #111;
+        color: #eee;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        display: flex;
+        height: 100vh;
+      }
+      .left,
+      .right {
+        flex: 1;
+        padding: 20px;
+      }
+      .left {
+        background: #181818;
+        border-right: 1px solid #333;
+      }
+      .right {
+        background: #1e1e1e;
+      }
+      button {
+        margin-top: 10px;
+        margin-right: 10px;
+        font-size: 16px;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 6px;
+        background-color: #444;
+        color: white;
+        cursor: pointer;
+      }
+      #output,
+      #error {
+        background: #222;
+        padding: 10px;
+        margin-top: 10px;
+        white-space: pre-wrap;
+        border-radius: 6px;
+      }
+      #error {
+        color: red;
+      }
+      .controls {
+        margin-top: 15px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/dracula.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/hint/javascript-hint.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/hint/show-hint.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <h2>Jam IDE v1.0</h2>
+        <textarea id="code"></textarea>
+        <div class="controls">
+          <button onclick="runCode()">Run</button>
+          <button onclick="clearOutput()">Clear</button>
+          <button onclick="saveCode()">Save</button>
+          <input type="file" onchange="loadFile(event)" />
+        </div>
+      </div>
+      <div class="right">
+        <h3>Output</h3>
+        <pre id="output"></pre>
+        <h3>Error</h3>
+        <pre id="error"></pre>
+      </div>
+    </div>
+
+    <script>
+      const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        mode: "javascript",
+        theme: "dracula",
+        extraKeys: { "Ctrl-Space": "autocomplete" },
+      });
+
+      const JAM_KEYWORDS = [
+        "let",
+        "print",
+        "say",
+        "ask",
+        "add",
+        "multiply",
+        "length of",
+        "uppercase",
+        "lowercase",
+        "reverse",
+        "square of",
+        "sqrt of",
+        "random between",
+        "wait",
+        "choose from",
+        "function",
+        "call",
+        "repeat",
+        "if",
+        "timer start",
+        "timer stop",
+      ];
+
+      CodeMirror.registerHelper("hint", "jam", function (editor) {
+        const cur = editor.getCursor();
+        const token = editor.getTokenAt(cur);
+        const start = token.start;
+        const end = cur.ch;
+        const line = cur.line;
+        const currentWord = token.string.slice(0, end - start);
+        const list = JAM_KEYWORDS.filter((k) => k.startsWith(currentWord));
+        return {
+          list: list.length ? list : JAM_KEYWORDS,
+          from: CodeMirror.Pos(line, start),
+          to: CodeMirror.Pos(line, end),
+        };
+      });
+
+      editor.on("inputRead", function onInputRead(cm, change) {
+        if (change.text[0] && /[a-zA-Z]/.test(change.text[0])) {
+          cm.showHint({ hint: CodeMirror.hint.jam });
+        }
+      });
+
+      async function runCode() {
+        const code = editor.getValue();
+        document.getElementById("output").innerText = "";
+        document.getElementById("error").innerText = "";
+        try {
+          const res = await fetch("http://localhost:5501/run", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code }),
+          });
+          const data = await res.json();
+          document.getElementById("output").innerText = data.output || "";
+          document.getElementById("error").innerText = data.error || "";
+        } catch (err) {
+          document.getElementById("error").innerText = "Error: " + err.message;
+        }
+      }
+
+      function clearOutput() {
+        document.getElementById("output").innerText = "";
+        document.getElementById("error").innerText = "";
+      }
+
+      function saveCode() {
+        const blob = new Blob([editor.getValue()], { type: "text/plain" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "mycode.jam";
+        a.click();
+      }
+
+      function loadFile(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function () {
+          editor.setValue(reader.result);
+        };
+        reader.readAsText(file);
+      }
+    </script>
+  </body>
+</html>
