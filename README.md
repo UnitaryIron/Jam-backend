@@ -137,61 +137,55 @@ print doubled
 - random, length, sqrt, pow - built-in functions
 
 ## Limitations
-No file system access
+- No file system access
+- No real concurrency or threading
+- Limited scope control (functions do not yet support closures)
+- Limited error messages (to be improved)
+- Transpiler currently covers a subset of all Jam features
 
-No real concurrency or threading
+## Development Notes
+- Written in Python 3.10+
+- Uses ast, eval, and custom parser logic
+- Designed to integrate with the Jam IDE
+- Modular structure for easy extension (parser, stdlib, core)
 
-Limited scope control (functions do not yet support closures)
-
-Limited error messages (to be improved)
-
-Transpiler currently covers a subset of all Jam features
-
-Development Notes
-Written in Python 3.10+
-
-Uses ast, eval, and custom parser logic
-
-Designed to integrate with the Jam IDE
-
-Modular structure for easy extension (parser, stdlib, core)
-
-Contributing
+## Contributing
 We welcome contributions from developers, educators, and students alike!
 
-Local Setup
-bash
+### Local Setup
+```bash
 git clone https://github.com/UnitaryIron/Jam-backend.git
 cd Jam-backend
 pip install -r requirements.txt
 python main.py
-Contribution Areas
-Area	What You Can Help With
-Core Interpreter	Improve logic, add new commands
-Transpiler	Extend JavaScript support
-Testing	Add test coverage, edge cases
-Docs & Tutorials	Create guides for educators and students
-IDE Integration	(Frontend repo) Help improve the web IDE
-Guidelines
-Fork the repo
+```
 
-Create a feature branch: git checkout -b feature/my-feature
+## Contribution Areas
 
-Commit with a clear message
+- Core Interpreter to improve logic, add new commands
+- Transpiler to extend JavaScript support
+- Testing	Add test coverage, edge cases
+- Docs & Tutorials	Create guides for educators and students
+- IDE Integration	(Frontend repo) Help improve the web IDE
 
-Push and open a pull request
+## Guidelines
 
-Be kind and respectful in reviews
+- Fork the repo
+- Create a feature branch: git checkout -b feature/my-feature
+- Commit with a clear message
+- Push and open a pull request
+- Be kind and respectful in reviews
 
-Good First Issues
-Check issues tagged with good first issue.
+### Good First Issues
 
-License
+- Check issues tagged with good first issue.
+
+## License
+
 This project is licensed under the MIT License.
 See LICENSE for details.
 
-Contact
+## Contact
 For questions, ideas, or collaboration:
-GitHub Issues: Create one
 Discord: unitaryiron_99094
 Email: emmanuellijo670@gmail.com
