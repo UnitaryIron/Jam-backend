@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, jsonify
-from kiddylang import run_jam_code
+from jam import run_jam_code
 from flask_cors import CORS
 
 app = Flask(__name__)
