@@ -35,55 +35,48 @@ We welcome contributions in these areas:
 - Documentation to create guides and tutorials	Technical writers
 - IDE Integration to help improve the web IDE	Frontend developers
   
-Workflow
-Create an Issue: Discuss your proposed change by opening an issue first
+## Workflow
 
-Branch Off: Create a feature branch from main:
+- Create an Issue: Discuss your proposed change by opening an issue first
+  
+- Branch Off: Create a feature branch from main:
+  ```bash
+  git checkout -b feature/your-feature-name
+  ```
+- Make Changes: Implement your changes with clear, well-commented code
 
-bash
-git checkout -b feature/your-feature-name
-Make Changes: Implement your changes with clear, well-commented code
+- Test: Ensure all tests pass:
+  ```bash
+  pytest
+- Commit: Write clear, descriptive commit messages
 
-Test: Ensure all tests pass:
+- Push: Push to your fork:
+  ```bash
+  git push origin feature/your-feature-name
+- Open a PR: Create a pull request against the main repository
 
-bash
-pytest
-Commit: Write clear, descriptive commit messages
+## Coding Standards
 
-Push: Push to your fork:
+- Follow existing code style (PEP 8 with some flexibility)
+- Write docstrings for all public functions
+- Keep functions small and focused
+- Add tests for new features
+- Update documentation when adding/changing features
 
-bash
-git push origin feature/your-feature-name
-Open a PR: Create a pull request against the main repository
+## Good First Issues
 
-Coding Standards
-Follow existing code style (PEP 8 with some flexibility)
-
-Write docstrings for all public functions
-
-Keep functions small and focused
-
-Add tests for new features
-
-Update documentation when adding/changing features
-
-Good First Issues
 Look for issues tagged with:
+- good first issue - Beginner-friendly
+- help wanted - Areas needing special attention
+- documentation - Documentation improvements
 
-good first issue - Beginner-friendly
+## Communication
 
-help wanted - Areas needing special attention
+- Join our Discord: https://discord.gg/GgB8hbvR
+- Use GitHub Issues for tracking work
+- Be respectful and inclusive in all communications
 
-documentation - Documentation improvements
+## License
 
-Communication
-Join our Discord: https://discord.gg/GgB8hbvR
-
-Use GitHub Issues for tracking work
-
-Be respectful and inclusive in all communications
-
-License
 By contributing, you agree that your contributions will be licensed under the project's MIT License.
-
 We appreciate your contribution to making Jam better for everyone!
