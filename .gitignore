@@ -1,0 +1,5 @@
+# allows people to use a local python environment without committing it
+venv/
+*.pyc
+__pycache__/
+.coverage

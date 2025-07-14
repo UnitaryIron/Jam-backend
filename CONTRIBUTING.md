@@ -34,11 +34,11 @@ We welcome contributions in these areas:
 - Testing to add test coverage, edge cases	QA specialists
 - Documentation to create guides and tutorials	Technical writers
 - IDE Integration to help improve the web IDE	Frontend developers
-  
+
 ## Workflow
 
 - Create an Issue: Discuss your proposed change by opening an issue first
-  
+
 - Branch Off: Create a feature branch from main:
   ```bash
   git checkout -b feature/your-feature-name
@@ -48,6 +48,14 @@ We welcome contributions in these areas:
 - Test: Ensure all tests pass:
   ```bash
   pytest
+
+- Test Coverage: Ensure all paths are tested
+  ```bash
+  coverage run -m pytest
+  coverage report
+  coverage html
+  ```
+
 - Commit: Write clear, descriptive commit messages
 
 - Push: Push to your fork:
