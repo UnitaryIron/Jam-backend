@@ -189,3 +189,6 @@ See LICENSE for details.
 For questions, ideas, or collaboration:
 Discord: unitaryiron_99094
 Email: emmanuellijo670@gmail.com
+
+![GitHub issues](https://img.shields.io/github/issues/UnitaryIron/Jam-backend)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
