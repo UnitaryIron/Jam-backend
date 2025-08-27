@@ -1,14 +1,15 @@
-# 🎵 Jam: A Friendly, Expressive Language for All Developers
+# Jam: A Friendly, Expressive Language for All Developers
 
 > **Jam** is a beginner-friendly programming language with a readable, English-like syntax that compiles to JavaScript. Designed to be simple enough for newcomers and powerful enough for professionals.
-
+**[Try Jam!](jam-org.vercel.app)**
+  
 ![License](https://img.shields.io/github/license/UnitaryIron/Jam-Backend)
 ![Issues](https://img.shields.io/github/issues/UnitaryIron/Jam-Backend)
 ![Last Commit](https://img.shields.io/github/last-commit/UnitaryIron/Jam-Backend)
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
 - [Why Jam?](#why-jam)
 - [Quick Start](#quick-start)
@@ -23,6 +24,7 @@
 - [Architecture](#architecture)
 - [Vision](#vision)
 - [Contributing](#contributing)
+- [Areas We Need Help With](#areas-we-need-help-with)
 - [Development Setup](#development-setup)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -191,92 +193,74 @@ Core Components:
 - JavaScript Transpiler — Outputs clean, idiomatic JavaScript
 - Standard Library — Built-in support for common operations
 
-🔮 Vision
-
+## Vision
 Jam aims to be the most approachable language without sacrificing power or extensibility.
 
 Roadmap
+- Web-based playground
+- Package manager for Jam modules
+- Optional static type annotations
+- Debugger and developer tools
+- Expanded standard library
+- Performance improvements
 
-🌐 Web-based playground
-
-📦 Package manager for Jam modules
-
-🧾 Optional static type annotations
-
-🐞 Debugger and developer tools
-
-📚 Expanded standard library
-
-🚀 Performance improvements
-
-🤝 Contributing
-
+## Contributing
 We welcome developers of all skill levels! Start contributing in just a few steps:
 
-Fork the repository
+- Fork the repository
+- Create a feature branch
+```bash
+ git checkout -b feature/my-feature
+```
+- Commit your changes
+```bash
+ git commit -m "Add my feature"
+```
+- Push to GitHub
+```bash
+ git push origin feature/my-feature
+```
+- Open a Pull Request
 
-Create a feature branch
+**Please see the CONTRIBUTING.md
+ and CODE_OF_CONDUCT.md**
 
-git checkout -b feature/my-feature
+## Areas We Need Help With
 
+- Language design and syntax ideas
+- Documentation and tutorials
+- Standard library development
+- Editor tooling and plugins
+- Test coverage and edge cases
 
-Commit your changes
-
-git commit -m "Add my feature"
-
-
-Push to GitHub
-
-git push origin feature/my-feature
-
-
-Open a Pull Request
-
-📄 Please see the CONTRIBUTING.md
- and CODE_OF_CONDUCT.md
-
-Areas We Need Help
-
-🧪 Language design and syntax ideas
-
-📖 Documentation and tutorials
-
-📦 Standard library development
-
-🛠️ Editor tooling and plugins
-
-🧹 Test coverage and edge cases
-
-💻 Development Setup
+## Development Setup
+```bash
 # Clone your fork
-git clone https://github.com/your-username/jam-language.git
-cd jam-language
-
+git clone https://github.com/UnitaryIron/Jam-Backend.git
+cd Jam-Backend
+```
+```bash
 # Run tests
 python test_jam.py
+```
 
+**Documentation build instructions coming soon.**
 
-📘 Documentation build instructions coming soon.
-
-📜 License
+## License
 
 This project is licensed under the MIT License
 .
 
-🙏 Acknowledgments
+## Acknowledgments
 
-Inspired by educational languages like Scratch, Python, and BASIC
+- Inspired by educational languages like Scratch, Python, and BASIC
+- Created to make programming more accessible and expressive
 
-Created to make programming more accessible and expressive
+**Thanks to all contributors**
 
-Thanks to all contributors
+## Support
 
-📞 Support
-
-📖 Documentation: Coming soon
-
-🐛 Issues: GitHub Issues
-
-💬 Discussions: GitHub Discussions
-
-📧 Email: jam-language@example.com
+- Documentation: Coming soon
+- Issues: GitHub Issues
+- Discussions: GitHub Discussions
+- Email: em.lijo@outlook.com
