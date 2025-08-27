@@ -1,7 +1,6 @@
 # Jam: A Friendly, Expressive Language for All Developers
 
 > **Jam** is a beginner-friendly programming language with a readable, English-like syntax that compiles to JavaScript. Designed to be simple enough for newcomers and powerful enough for professionals.
-**[Try Jam!](jam-org.vercel.app)**
   
 ![License](https://img.shields.io/github/license/UnitaryIron/Jam-Backend)
 ![Issues](https://img.shields.io/github/issues/UnitaryIron/Jam-Backend)
