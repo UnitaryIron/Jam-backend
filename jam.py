@@ -800,6 +800,9 @@ def run_jam_code(code: str) -> str:
             self.value = value
 
     def _skip_blank(lines: List[str], idx: int) -> int:
+        """
+        Skips blank lines and comments, returning the next valid index.
+        """
         while idx < len(lines):
             s = lines[idx].strip()
             if not s or s.startswith("#"):
