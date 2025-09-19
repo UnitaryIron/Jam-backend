@@ -528,6 +528,21 @@ def run_jam_code(code: str) -> str:
         return block, i
 
     def run_lines(lines: List[str], start: int = 0, local_vars: Optional[Dict[str, Any]] = None) -> int:
+        """
+        Interprets and executes JAM code line by line.
+
+        Handles control flow (if/else, repeat), variable assignment, expressions,
+        function definitions/calls/returns, input/output (print, say, ask),
+        string and math operations, randomness, timers, and simple utilities.
+
+        Args:
+            lines: List of JAM code lines.
+            start: Index to begin execution from (default 0).
+            local_vars: Optional dictionary of variables for local scope.
+
+        Returns:
+            The index position where execution stopped.
+        """
         nonlocal timer_start
         env = variables if local_vars is None else local_vars
         i = start
