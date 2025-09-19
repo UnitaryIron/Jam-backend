@@ -70,8 +70,6 @@ pip install -r requirements.txt
 ```jam
 # Welcome to Jam!
 say "Hello, World!"
-set name = ask "What's your name?" into name
-print "Welcome " + name + "!"
 ```
 Run with the Jam interpreter:
 ```python
@@ -96,12 +94,18 @@ set numbers = [1, 2, 3, 4, 5]
 
 ### Control Flow
 ```jam
-if temperature > 30 {
-    say "It's hot outside!"
-} else if temperature > 20 {
-    say "It's warm outside!"
+# Basic variable assignment and arithmetic
+set x = 10
+set y = 5
+set name = "Alice"
+
+# Conditional logic
+if x > y {
+    print "x is greater than y"
+} else if x < y {
+    print "x is less than y"
 } else {
-    say "It's cool outside!"
+    print "x equals y"
 }
 ```
 
@@ -117,41 +121,89 @@ repeat 5 {
 Named function:
 ```jam
 function greet (name) {
-    return "Hello " + name + "!"
+    add "Hello, " and name into message
+    print message
+    return message
 }
 ```
 
 Anonymous function (lambda):
 ```jam
-set double = function anonymous (x) {
-    return x * 2
+function anonymous (x, y) {
+    add x and y into result
+    return result
 }
 ```
 
 Calling functions:
 ```jam
-call greet "Jam Developer"
-print double(21)
+call greet("World")
+set sum_result = call anonymous(5, 7)
+print sum_result
 ```
 
 ### Operations
 
 Math operations:
 ```jam
-add 5 and 3 into result
-multiply result and 2 into final
+# Basic arithmetic
+set a = 15
+set b = 3
+
+add a and b into sum
+print sum
+
+multiply a and b into product
+print product
+
+# Math functions
+square of a into a_squared
+print a_squared
+
+sqrt of 64 into root
+print root
+
+# Random numbers
+random between 1 and 100 into lucky_number
+print lucky_number
 ```
 
 String operations:
-```jam
-uppercase "hello" into shout
-reverse "Jam" into backwards
+```jam# String manipulation
+set message = "hello world"
+
+uppercase message into upper_msg
+print upper_msg
+
+lowercase message into lower_msg
+print lower_msg
+
+reverse message into reversed_msg
+print reversed_msg
+
+# String concatenation
+set first = "Hello"
+set last = "World"
+add first and " " into temp
+add temp and last into greeting
+print greeting
 ```
 
 List operations:
 ```jam
+# Array creation and manipulation
 set numbers = [1, 2, 3, 4, 5]
+set names = ["Alice", "Bob", "Charlie"]
+
 length of numbers into count
+print count
+
+# Map function
+set doubled = map (n) => n * 2 over numbers
+print doubled
+
+set greetings = map (name) => "Hello " + name over names
+print greetings
 ```
 
 Map (transform array):
@@ -163,21 +215,34 @@ set doubled = map (n) => n * 2 over numbers
 
 Timing execution:
 ```jam
+# Performance timing
 timer start
-# ... your code ...
+
+repeat 1000 {
+    set x = 1 + 1
+}
+
 timer stop
 ```
 
 Random values:
 ```jam
-random between 1 and 100 into lucky_number
-choose from "apple", "banana", "cherry" into fruit
+# Random selection
+choose from ["rock", "paper", "scissors"] into choice
+print choice
 ```
 
 User input:
 ```jam
-ask "What's your name?" into username
-print "Hello " + username
+# Getting user input
+ask "What is your name?" and store in user_name
+add "Hello, " and user_name into welcome_message
+print welcome_message
+
+ask "Enter first number:" into num1
+ask "Enter second number:" into num2
+add num1 and num2 into total
+print total
 ```
 
 ## Architecture
