@@ -503,6 +503,9 @@ def run_jam_code(code: str) -> str:
             return False
 
     def parse_block(lines: List[str], start: int) -> Tuple[List[str], int]:
+        """
+        Parses a block of code from a list of lines, starting at the given index, and returns the block with the ending index.
+        """
         block: List[str] = []
         i = start
         depth = 0
