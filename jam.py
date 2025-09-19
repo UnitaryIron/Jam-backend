@@ -459,6 +459,9 @@ def run_jam_code(code: str) -> str:
         print(x)
 
     def eval_expr(expr: str) -> Any:
+        """
+        Evaluates a string expression into a Python value (bool, str, int, float, list, or variable).
+        """
         e = expr.strip()
 
         if e == "true": return True
