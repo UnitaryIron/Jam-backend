@@ -442,6 +442,9 @@ def _parse_arrow(fn: str):
 
 # ---------- Interpreter (Python) ----------
 def run_jam_code(code: str) -> str:
+    """
+    Executes JAM code from a string and returns the captured output as a string.
+    """
     import io, sys, random, math, time
 
     output = io.StringIO()
