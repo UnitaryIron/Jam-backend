@@ -442,6 +442,9 @@ def _parse_arrow(fn: str):
 
 # ---------- Interpreter (Python) ----------
 def run_jam_code(code: str) -> str:
+    """
+    Executes JAM code from a string and returns the captured output as a string.
+    """
     import io, sys, random, math, time
 
     output = io.StringIO()
@@ -456,6 +459,9 @@ def run_jam_code(code: str) -> str:
         print(x)
 
     def eval_expr(expr: str) -> Any:
+        """
+        Evaluates a string expression into a Python value (bool, str, int, float, list, or variable).
+        """
         e = expr.strip()
 
         if e == "true": return True
@@ -497,6 +503,9 @@ def run_jam_code(code: str) -> str:
             return False
 
     def parse_block(lines: List[str], start: int) -> Tuple[List[str], int]:
+        """
+        Parses a block of code from a list of lines, starting at the given index, and returns the block with the ending index.
+        """
         block: List[str] = []
         i = start
         depth = 0
@@ -519,6 +528,21 @@ def run_jam_code(code: str) -> str:
         return block, i
 
     def run_lines(lines: List[str], start: int = 0, local_vars: Optional[Dict[str, Any]] = None) -> int:
+        """
+        Interprets and executes JAM code line by line.
+
+        Handles control flow (if/else, repeat), variable assignment, expressions,
+        function definitions/calls/returns, input/output (print, say, ask),
+        string and math operations, randomness, timers, and simple utilities.
+
+        Args:
+            lines: List of JAM code lines.
+            start: Index to begin execution from (default 0).
+            local_vars: Optional dictionary of variables for local scope.
+
+        Returns:
+            The index position where execution stopped.
+        """
         nonlocal timer_start
         env = variables if local_vars is None else local_vars
         i = start
@@ -776,6 +800,9 @@ def run_jam_code(code: str) -> str:
             self.value = value
 
     def _skip_blank(lines: List[str], idx: int) -> int:
+        """
+        Skips blank lines and comments, returning the next valid index.
+        """
         while idx < len(lines):
             s = lines[idx].strip()
             if not s or s.startswith("#"):
