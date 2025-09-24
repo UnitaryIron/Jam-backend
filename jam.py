@@ -13,6 +13,7 @@ from typing import Dict, List, Optional, Union, Any, Tuple
 JamType = Union[str, int, float, bool, list]
 
 class TypeErrorJam(Exception):
+    """Custom exception for type-related errors in Jam."""
     pass
 
 # Tracks variables and their types (by name -> Python type)
@@ -78,17 +79,43 @@ def _collect_block(lines: List[str], start_idx: int) -> Tuple[List[str], int]:
 _anon_counter = 0
 
 def _anon_name() -> str:
+    """Generates a unique name for an anonymous function.
+
+    Returns:
+        A string representing a unique function name.
+    """
     global _anon_counter
     _anon_counter += 1
     return f"_anon_{_anon_counter}"
 
 def _trim_quotes(s: str) -> str:
+    """Removes leading and trailing quotes from a string.
+
+    Args:
+        s: The string to trim.
+
+    Returns:
+        The string without surrounding single or double quotes.
+    """
     s = s.strip()
     if (s.startswith('"') and s.endswith('"')) or (s.startswith("'") and s.endswith("'")):
         return s[1:-1]
     return s
 
 def jam_to_js(jam_code: str) -> str:
+    """Compiles a string of Jam code into JavaScript.
+
+    This function iterates through each line of the Jam code, translating
+    constructs like variable assignments, control flow, function definitions,
+    and I/O commands into their JavaScript equivalents.
+
+    Args:
+        jam_code: A string containing the Jam source code.
+
+    Returns:
+        A string of compiled JavaScript code. Type warnings are appended
+        as comments at the end of the script.
+    """
     type_warnings.clear()
     lines = [ln.rstrip("\n") for ln in jam_code.splitlines()]
     js: List[str] = []
@@ -424,10 +451,28 @@ def _collect_until_brace(lines: List[str], start: int) -> Tuple[List[str], int]:
     return block, i
 
 def _indent_block(js_str: str, spaces: int = 2) -> List[str]:
+    """Indents a block of JavaScript code.
+
+    Args:
+        js_str: The JavaScript code as a string.
+        spaces: The number of spaces to indent each line.
+
+    Returns:
+        A list of strings, where each string is an indented line of code.
+    """
     pad = " " * spaces
     return [pad + ln if ln else "" for ln in js_str.splitlines()]
 
 def _skip_blank_comments(lines: List[str], i: int) -> int:
+    """Skips over blank lines and comments.
+
+    Args:
+        lines: A list of code lines.
+        i: The starting index.
+
+    Returns:
+        The index of the next non-blank, non-comment line.
+    """
     while i < len(lines):
         s = lines[i].strip()
         if not s or s.startswith("#"):
@@ -504,6 +549,14 @@ def run_jam_code(code: str) -> str:
             return e  
 
     def eval_condition(cond: str) -> bool:
+        """Evaluates a condition string to a boolean.
+
+        Args:
+            cond: The condition string to evaluate.
+
+        Returns:
+            True if the condition is met, False otherwise.
+        """
         try:
             val = eval(cond.replace("true", "True").replace("false", "False"),
                        {"__builtins__": {}}, dict(variables))
@@ -805,6 +858,7 @@ def run_jam_code(code: str) -> str:
         return i
 
     class _JamReturn(Exception):
+        """Exception used to handle 'return' statements in Jam functions."""
         def __init__(self, value: Any):
             self.value = value
 
