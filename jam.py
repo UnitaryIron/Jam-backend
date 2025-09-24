@@ -1,3 +1,12 @@
+"""Compiler and interpreter for the Jam programming language.
+
+This module provides two primary functionalities:
+1.  jam_to_js: A compiler that translates Jam source code into JavaScript.
+2.  run_jam_code: An interpreter that executes Jam source code directly in Python.
+
+It also includes helper functions for parsing, type inference, and execution logic.
+"""
+
 from __future__ import annotations
 from typing import Dict, List, Optional, Union, Any, Tuple
 
