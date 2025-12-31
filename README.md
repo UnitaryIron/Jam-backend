@@ -43,7 +43,6 @@
 
 ### For Professionals
 
-- **JavaScript Compilation** — Convert Jam into clean, production-ready JavaScript  
 - **Type Inference** — Smart type detection and warning system  
 - **Modern Features** — Functions, lambdas, maps, timers, and more  
 - **Extensible Architecture** — Easily add new features or tools  
@@ -74,11 +73,6 @@ say "Hello, World!"
 Run with the Jam interpreter:
 ```python
 python jam.py hello.jam
-```
-Or compile to JavaScript:
-```
-python jam.py --compile hello.jam > hello.js
-node hello.js
 ```
 
 ## Language Guide
@@ -246,16 +240,15 @@ print total
 ```
 
 ## Architecture
-Jam is built with a dual-path architecture:
+Jam is built with an Interpreter:
 
-- Interpreter: Runs Jam directly in Python for quick testing
-- Compiler: Transpiles Jam into readable, performant JavaScript
+- It runs Jam directly in Python for quick testing
+> Jam used to have dual architecture. However for faster development and educational focus, the compiler was sunsetted in v2.0.0
 
 Core Components:
 
 - Parser — Converts Jam syntax into an abstract syntax tree
 - Type System — Provides inference and developer-friendly warnings
-- JavaScript Transpiler — Outputs clean, idiomatic JavaScript
 - Standard Library — Built-in support for common operations
 
 ## Vision
