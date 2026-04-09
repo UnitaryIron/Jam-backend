@@ -95,7 +95,7 @@ def run_jam_code(code: str) -> str:
     sys_stdout = sys.stdout
     sys.stdout = output
 
-   # Error Detection System
+    # Error Detection System
 
     class ErrorSeverity(Enum):
         HINT = "Hint"
@@ -116,7 +116,7 @@ def run_jam_code(code: str) -> str:
             super().__init__(message)
 
     suggestion_rule = Callable[[str, int, str], List[tuple[str, ErrorSeverity]]]
-    suggestion_rules: List[suggestion_rule] = []
+    suggestion_rules: List[suggestion_rule] = [] # type: ignore
 
     def format_n_show_error(e: SyntaxErrorJam) -> None:
         """Format and print a SyntaxErrorJam to the output."""
@@ -128,7 +128,7 @@ def run_jam_code(code: str) -> str:
         if e.example:
             print(f"Example: {e.example}")
 
-    def register_suggestion(rule: suggestion_rule):
+    def register_suggestion(rule: suggestion_rule): # type: ignore
         suggestion_rules.append(rule)
 
     def suggest_correction(name: str, line_num: int, line: str) -> List[tuple[str, ErrorSeverity]]:
@@ -217,9 +217,9 @@ def run_jam_code(code: str) -> str:
     ]
 
     validator = Callable[[str, int, str], None]
-    validators: List[validator] = []
+    validators: List[validator] = [] # pyright: ignore[reportInvalidTypeForm]
 
-    def register_validator(v: validator):
+    def register_validator(v: validator): # type: ignore
         validators.append(v)
 
     def validate_variable_name(name: str, line_num: int, line: str):
@@ -314,42 +314,42 @@ def run_jam_code(code: str) -> str:
         print(x)
 
     def eval_expr(expr: str, current_env: Optional[Dict] = None) -> Any:
-    e = expr.strip()
+        e = expr.strip()
 
-    if e == "true": return True
-    if e == "false": return False
+        if e == "true": return True
+        if e == "false": return False
 
-    if (e.startswith('"') and e.endswith('"')) or (e.startswith("'") and e.endswith("'")):
-        return e[1:-1]
+        if (e.startswith('"') and e.endswith('"')) or (e.startswith("'") and e.endswith("'")):
+            return e[1:-1]
 
-    if e.startswith("[") and e.endswith("]"):
-        inner = e[1:-1].strip()
-        if not inner:
-            return []
-        parts = [p.strip() for p in inner.split(",")]
-        return [eval_expr(p, current_env) for p in parts]
+        if e.startswith("[") and e.endswith("]"):
+            inner = e[1:-1].strip()
+            if not inner:
+                return []
+            parts = [p.strip() for p in inner.split(",")]
+            return [eval_expr(p, current_env) for p in parts]
 
-    if e.isdigit() or (e.startswith('-') and e[1:].isdigit()):
+        if e.isdigit() or (e.startswith('-') and e[1:].isdigit()):
+            try:
+                return int(e)
+            except:
+                pass
+
+        active_vars = current_env if current_env is not None else variables
+
         try:
-            return int(e)
+            if "." in e:
+                return float(e)
         except:
             pass
-            
-    active_vars = current_env if current_env is not None else variables
 
-    try:
-        if "." in e:
-            return float(e)
-    except:
-        pass
+        if e in active_vars:
+            return active_vars[e]
 
-    if e in active_vars:
-        return active_vars[e]
-
-    try:
-        return eval(e, {"__builtins__": {}}, dict(active_vars))
-    except:
-        return e
+        try:
+            return eval(e, {"__builtins__": {}}, dict(active_vars))
+        except:
+            return e
 
     def eval_condition(cond: str) -> bool:
         try:
