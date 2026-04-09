@@ -314,7 +314,7 @@ def run_jam_code(code: str) -> str:
     def say(x):
         print(x)
 
-    def eval_expr(expr: str) -> Any:
+    def eval_expr(expr: str, current_env: Optional[Dict] = None) -> Any:
         e = expr.strip()
 
         if e == "true": return True
@@ -336,6 +336,8 @@ def run_jam_code(code: str) -> str:
             except:
                 pass
 
+        active_vars = current_env if current_env is not None else variables
+
         try:
             if "." in e:
                 return float(e)
@@ -346,7 +348,7 @@ def run_jam_code(code: str) -> str:
             return variables[e]
 
         try:
-            return eval(e, {"__builtins__": {}}, dict(variables))
+            return eval(e, {"__builtins__": {}}, dict(active_vars))
         except:
             return e
 
