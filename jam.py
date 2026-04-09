@@ -464,12 +464,12 @@ def run_jam_code(code: str) -> str:
                 continue
 
             if line.startswith("print "):
-                print(eval_expr(line[6:].strip()))
+                print(eval_expr(line[6:].strip(), env))
                 i += 1
                 continue
 
             if line.startswith("say "):
-                print(eval_expr(line[4:].strip()))
+                print(eval_expr(line[4:].strip(), env))
                 i += 1
                 continue
 
