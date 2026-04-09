@@ -283,7 +283,6 @@ def run_jam_code(code: str) -> str:
                 f"set {name}_value = 10"
             )
 
-    # Register validators
     for v in [
         validate_empty_name,
         validate_password,
@@ -308,49 +307,49 @@ def run_jam_code(code: str) -> str:
         return None
 
     variables: Dict[str, Any] = {}
-    functions: Dict[str, Tuple[List[str], List[str]]] = {}  # name -> (params, body)
+    functions: Dict[str, Tuple[List[str], List[str]]] = {} 
     timer_start: Optional[float] = None
 
     def say(x):
         print(x)
 
     def eval_expr(expr: str, current_env: Optional[Dict] = None) -> Any:
-        e = expr.strip()
+    e = expr.strip()
 
-        if e == "true": return True
-        if e == "false": return False
+    if e == "true": return True
+    if e == "false": return False
 
-        if (e.startswith('"') and e.endswith('"')) or (e.startswith("'") and e.endswith("'")):
-            return e[1:-1]
+    if (e.startswith('"') and e.endswith('"')) or (e.startswith("'") and e.endswith("'")):
+        return e[1:-1]
 
-        if e.startswith("[") and e.endswith("]"):
-            inner = e[1:-1].strip()
-            if not inner:
-                return []
-            parts = [p.strip() for p in inner.split(",")]
-            return [eval_expr(p) for p in parts]
+    if e.startswith("[") and e.endswith("]"):
+        inner = e[1:-1].strip()
+        if not inner:
+            return []
+        parts = [p.strip() for p in inner.split(",")]
+        return [eval_expr(p, current_env) for p in parts]
 
-        if e.isdigit() or (e.startswith('-') and e[1:].isdigit()):
-            try:
-                return int(e)
-            except:
-                pass
-
-        active_vars = current_env if current_env is not None else variables
-
+    if e.isdigit() or (e.startswith('-') and e[1:].isdigit()):
         try:
-            if "." in e:
-                return float(e)
+            return int(e)
         except:
             pass
+            
+    active_vars = current_env if current_env is not None else variables
 
-        if e in variables:
-            return variables[e]
+    try:
+        if "." in e:
+            return float(e)
+    except:
+        pass
 
-        try:
-            return eval(e, {"__builtins__": {}}, dict(active_vars))
-        except:
-            return e
+    if e in active_vars:
+        return active_vars[e]
+
+    try:
+        return eval(e, {"__builtins__": {}}, dict(active_vars))
+    except:
+        return e
 
     def eval_condition(cond: str) -> bool:
         try:
