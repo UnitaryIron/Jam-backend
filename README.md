@@ -1,7 +1,7 @@
   ![Repo Logo](Jam-logo-modified.png)
 # Jam: A Friendly, Expressive Language for All Developers
 
-> **Jam** is a beginner-friendly programming language with a readable, English-like syntax that compiles to JavaScript. Designed to be simple enough for newcomers and powerful enough for professionals.
+> **Jam** is a beginner-friendly programming language with a readable, English-like syntax. Designed to be simple enough for newcomers and powerful enough for professionals. Try out Jam instantly in the online web-based [IDE](https://jam-ide.vercel.app/)
   
 ![License](https://img.shields.io/github/license/UnitaryIron/Jam-Backend)
 ![Issues](https://img.shields.io/github/issues/UnitaryIron/Jam-Backend)
@@ -51,16 +51,7 @@
 
 ## Quick Start
 
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/UnitaryIron/Jam-Backend.git
-cd Jam-Backend
-
-# Install dependencies
-pip install -r requirements.txt
-```
+Start right now by visiting the [Jam's IDE](https://jam-ide.vercel.app/)
 
 ## Your First Jam Program
 
@@ -255,7 +246,6 @@ Core Components:
 Jam aims to be the most approachable language without sacrificing power or extensibility.
 
 Roadmap
-- Web-based playground
 - Package manager for Jam modules
 - Optional static type annotations
 - Debugger and developer tools
