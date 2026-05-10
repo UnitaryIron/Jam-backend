@@ -213,7 +213,7 @@ timer stop
 Random values:
 ```jam
 # Random selection
-choose from ["rock", "paper", "scissors"] into choice
+choose from rock, paper, scissors into choice
 print choice
 ```
 
